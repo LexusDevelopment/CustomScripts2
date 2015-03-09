@@ -32,13 +32,14 @@ local function NewBox()
 	local TorsoCF = Player.Character['Torso'].CFrame
 	local x,y,z = TorsoCF.x,TorsoCF.y,TorsoCF.z
 	--local Velocity = {x=(x/16)*10,y=(y/16)*10,z=(z/16)*10}
-	local Velocity = {x=Player.Character.Torso.CFrame.lookVector.x*(16*2),y=Player.Character.Torso.CFrame.lookVector.y*(16*2),z=Player.Character.Torso.CFrame.lookVector.z*(16*2)}
+	local Velocity = {x=Player.Character.Torso.CFrame.lookVector.x*(16*3),y=Player.Character.Torso.CFrame.lookVector.y*(16*3),z=Player.Character.Torso.CFrame.lookVector.z*(16*3)}
 	local Rotation = Player.Character.Torso.Rotation
 	local BaseFloor = Instance.new("Part",workspace)
 	BaseFloor.Parent = workspace;
 	BaseFloor.Anchored = true;
-	BaseFloor.CanCollide = true;
-	BaseFloor.Transparency = 0.2;
+	BaseFloor.CanCollide = false;
+	BaseFloor.Locked = true;
+	BaseFloor.Transparency = 0.3;
 	BaseFloor.TopSurface = "SmoothNoOutlines";
 	BaseFloor.BottomSurface = "SmoothNoOutlines";
 	BaseFloor.BrickColor = COL;
