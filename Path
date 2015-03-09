@@ -1,0 +1,91 @@
+-- Made by 12packkid
+
+local Player = Game:GetService("Players").LocalPlayer;
+local M = Player:GetMouse();
+local TorsoCF = Player.Character['Torso'].CFrame
+local COL = BrickColor.new(1006)
+Player.Chatted:connect(function(m)
+	if m:sub(1,4)=="col;"then
+		COL = BrickColor.new(m:sub(5))
+	end
+end)
+--[[ 
+NOTES:
+
+Initial Velocity = 16 * 5 (where 16 = walkspeed and 5 = exponent/speed)
+Time = 1 / 5 (1 = Second, 5 = IntialVelocity's multiplier)
+Rotation = (ARG / 16) * 5
+]]
+
+local function GeneratePart(a)
+	local part = Instance.new(a,workspace)
+	return function(b)
+		for Index, Value in pairs(b) do
+			part[Index] = Value
+		end
+		return part
+	end
+end
+
+local function NewBox()
+	print'triggered 1'
+	local TorsoCF = Player.Character['Torso'].CFrame
+	local x,y,z = TorsoCF.x,TorsoCF.y,TorsoCF.z
+	--local Velocity = {x=(x/16)*10,y=(y/16)*10,z=(z/16)*10}
+	local Velocity = {x=Player.Character.Torso.CFrame.lookVector.x*(16*2),y=Player.Character.Torso.CFrame.lookVector.y*(16*2),z=Player.Character.Torso.CFrame.lookVector.z*(16*2)}
+	local Rotation = Player.Character.Torso.Rotation
+	local BaseFloor = Instance.new("Part",workspace)
+	BaseFloor.Parent = workspace;
+	BaseFloor.Anchored = true;
+	BaseFloor.CanCollide = true;
+	BaseFloor.Transparency = 0.2;
+	BaseFloor.TopSurface = "SmoothNoOutlines";
+	BaseFloor.BottomSurface = "SmoothNoOutlines";
+	BaseFloor.BrickColor = COL;
+	BaseFloor.FormFactor = "Custom";
+	BaseFloor.Size = Vector3.new(12,0,16);
+	BaseFloor.Velocity = Vector3.new(Velocity.x,Velocity.y,Velocity.z);
+	BaseFloor.Rotation = Vector3.new(Rotation);
+	BaseFloor.CFrame = TorsoCF * CFrame.new(0,-3,0)
+	local LSide,RSide,R = BaseFloor:clone(),BaseFloor:clone(),BaseFloor:clone()
+	LSide.Parent,RSide.Parent,R.Parent = BaseFloor,BaseFloor,BaseFloor
+	LSide.Velocity,RSide.Velocity = Vector3.new(0,0,0),Vector3.new(0,0,0)
+	LSide.Size = Vector3.new(0.1,10,16)
+	RSide.Size = Vector3.new(0.1,10,16)
+	LSide.CanCollide,RSide.CanCollide = false
+	local CFrames = {
+		Left = BaseFloor.CFrame * CFrame.new(-6,3,0);
+		Right = BaseFloor.CFrame * CFrame.new(6,3,0);
+		Top = BaseFloor.CFrame * CFrame.new(0,7.75,0);
+	};
+	LSide.CFrame,RSide.CFrame,R.CFrame = CFrames.Left,CFrames.Right,CFrames.Top
+	spawn(function()
+		wait(60)
+		print'k'
+		RSide:Destroy()
+		LSide:Destroy()
+		R:Destroy()
+		BaseFloor:Destroy()
+	end)
+	print'triggered'
+end
+
+print'trig'
+local Holding = false
+coroutine.resume(coroutine.create(function()
+	M.KeyDown:connect(function(b)
+		if b == "g" then
+			Holding = true
+		end
+	end)
+	M.KeyUp:connect(function(b)
+		if b == "g" then
+			Holding = false
+		end
+	end)
+	while wait(0.2) do
+		if Holding == true then
+			NewBox()
+		end
+	end
+end))
