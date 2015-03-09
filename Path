@@ -3,7 +3,7 @@
 local Player = Game:GetService("Players").LocalPlayer;
 local M = Player:GetMouse();
 local TorsoCF = Player.Character['Torso'].CFrame
-local COL = BrickColor.new(1006)
+local COL = BrickColor.new(1016)
 Player.Chatted:connect(function(m)
 	if m:sub(1,4)=="col;"then
 		COL = BrickColor.new(m:sub(5))
@@ -37,8 +37,7 @@ local function NewBox()
 	local BaseFloor = Instance.new("Part",workspace)
 	BaseFloor.Parent = workspace;
 	BaseFloor.Anchored = true;
-	BaseFloor.CanCollide = false;
-	BaseFloor.Locked = true;
+	BaseFloor.CanCollide = true;
 	BaseFloor.Transparency = 0.3;
 	BaseFloor.TopSurface = "SmoothNoOutlines";
 	BaseFloor.BottomSurface = "SmoothNoOutlines";
